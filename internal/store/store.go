@@ -5,7 +5,7 @@ import (
 	"crypto/rand"
 	"errors"
 	"fmt"
-	"log"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"strings"
@@ -28,8 +28,8 @@ const (
 )
 
 type Store struct {
-	dir string
-	logger *log.Logger
+	dir    string
+	logger *slog.Logger
 }
 
 func New(dir string) (*Store, error) {
