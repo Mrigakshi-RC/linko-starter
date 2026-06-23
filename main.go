@@ -41,6 +41,12 @@ func run(ctx context.Context, cancel context.CancelFunc, httpPort int, dataDir s
 	env := os.Getenv("ENV")
 	hostname, _ := os.Hostname()
 
+	shutdown, err := initTracing(ctx)
+	if err != nil {
+		slog.Error("failed to initialize tracing: %v", err)
+	}
+	defer shutdown(ctx)
+
 	logger, closeFn, initErr := initializeLogger(LINKO_LOG_FILE)
 	logger = logger.With(
 		slog.String("git_sha", build.GitSHA),
